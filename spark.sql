@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS `tVolunteer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wxOpenId` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `gende` enum('MAN','WOMEN') DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `school` varchar(128) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `qq` varchar(32) DEFAULT NULL,
+  `parentName` varchar(128) DEFAULT NULL,
+  `parentPhone` varchar(20) DEFAULT NULL,
+  `parentJob` varchar(128) DEFAULT NULL,
+  `studyAbroad` varchar(128) DEFAULT NULL,
+  `teachExpirence` text,
+  `advice` text,
+  `hoby` varchar(128) DEFAULT NULL,
+  `socialExpirence` text,
+  `department` varchar(128) DEFAULT NULL,
+  `applyDate` datetime DEFAULT NULL,
+  `applySchedule` enum('DOING','DONE','REJECT') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `tStudent` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wxOpenId` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `gende` enum('MAN','WOMEN') DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `school` varchar(128) DEFAULT NULL,
+  `grade` varchar(128) DEFAULT NULL,
+  `qq` varchar(32) DEFAULT NULL,
+  `parentName` varchar(128) DEFAULT NULL,
+  `parentPhone` varchar(20) DEFAULT NULL,
+  `parentJob` varchar(128) DEFAULT NULL,
+  `applyDate` datetime DEFAULT NULL,
+  `applySchedule` enum('DOING','DONE','REJECT') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
