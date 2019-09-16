@@ -19,14 +19,14 @@ Spark通过sqlalchemy来进行数据库操作，每个表都对应一个类
 # API协议
 ## 协议总览
 **url**
-'''
+```
 https://localhost/api
-'''
+```
 https协议, 请求路径为/api。以POST方式请求，请求和返回为json格式。
 
 **请求参数**
 
-···
+```
 {
   "action": "student.add",
   "data": {
@@ -35,7 +35,7 @@ https协议, 请求路径为/api。以POST方式请求，请求和返回为json�
     "phone": "666666"
   }
 }
-···
+```
 
 请求参数分为两部分:
 * action：action分为两部分 `module.method`，第一部分为module，第二部分为module对应的处理函数。
@@ -43,7 +43,7 @@ https协议, 请求路径为/api。以POST方式请求，请求和返回为json�
 
 **响应参数**
 
-···
+```
 {
   "msg": "sucess",
   "code": 0,
@@ -70,7 +70,7 @@ https协议, 请求路径为/api。以POST方式请求，请求和返回为json�
     "parentPhone": null
   }
 }
-···
+```
 
 响应参数分为三部分：
 * code: 返回码。整型，返回0为成功，非0表示错误。 另外http的返回码非200，请求也是错误
@@ -85,4 +85,61 @@ https协议, 请求路径为/api。以POST方式请求，请求和返回为json�
 volunteer.add|数据库中增加volunteer。wxOpenId,name是必须传入
 volunteer.get|查询volunteer。根据传入的id (插入时生成的自增ID)查询volunteer信息
 volunteer.update|更改volunteer的信息。id是必传的，更改指定id的信息。除了id和wxOpenId不可更改外，在data中的传入的字段都可以更改
+student.add|数据库中增加student。
+student.get|查询student。
+student.update|更改student的信息。
+
+# 代码结构
+* app.py  flask的http请求入口处理。将/api的请求，路由到apiDispatch函数处理。根据action找到handler/中的处理module
+* handler/volunteer.py  处理action=volunteer.xxxx 的消息。
+* handler/student.py  处理action=student.xxxx 的消息。
+* model/Volunteer.py  Volunteer的model类，对应数据库中tVolunteer表。是Sqlalchemy的orm对应的类。 handler/volunteer.py会import这个文件，操作数据库.
+* model/Student.py  Student的model类，对应数据库中Student表。是Sqlalchemy的orm对应的类。 handler/student.py会import这个文件，操作数据库.
+* restart.sh  简单重启webserver的脚本
+
+# 数据库表设计
+根据设计文档，创建了tVolunteer和tStudent两张表
+```
+CREATE TABLE IF NOT EXISTS `tVolunteer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wxOpenId` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `gende` enum('MAN','WOMEN') DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `school` varchar(128) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `qq` varchar(32) DEFAULT NULL,
+  `parentName` varchar(128) DEFAULT NULL,
+  `parentPhone` varchar(20) DEFAULT NULL,
+  `parentJob` varchar(128) DEFAULT NULL,
+  `studyAbroad` varchar(128) DEFAULT NULL,
+  `teachExpirence` text,
+  `advice` text,
+  `hoby` varchar(128) DEFAULT NULL,
+  `socialExpirence` text,
+  `department` varchar(128) DEFAULT NULL,
+  `applyDate` datetime DEFAULT NULL,
+  `applySchedule` enum('DOING','DONE','REJECT') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `tStudent` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wxOpenId` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `gende` enum('MAN','WOMEN') DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `school` varchar(128) DEFAULT NULL,
+  `grade` varchar(128) DEFAULT NULL,
+  `qq` varchar(32) DEFAULT NULL,
+  `parentName` varchar(128) DEFAULT NULL,
+  `parentPhone` varchar(20) DEFAULT NULL,
+  `parentJob` varchar(128) DEFAULT NULL,
+  `applyDate` datetime DEFAULT NULL,
+  `applySchedule` enum('DOING','DONE','REJECT') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+```
 
