@@ -12,9 +12,14 @@ def add(para):
     for f in fields:
         if f in para:
             r[f] = para[f]
-    db.session.add(r)
-    db.session.commit()
-    return 0, 'sucess', []
+    try:
+        db.session.add(r)
+        db.session.commit()
+        return 0, 'sucess', []
+    except Exception as e:
+        db.session.rollback()
+        print(e)
+        return 500, "db fail", []
 
 def get(para):
     id = para["id"]
@@ -33,8 +38,12 @@ def update(para):
     for field in fields:
         if field in para and field not in ("id", "wxOpenId"):
             update[field] = para[field]
-    req.update(update)
-
-    db.session.commit()
+    try:
+        req.update(update)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print(e)
+        return 500, "db fail", []
 
     return 0, 'sucess', None
