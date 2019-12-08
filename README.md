@@ -5,16 +5,17 @@
 API是以python的flask框架搭建，数据库的访问使用Sqlalchemy的orm库
 
 ## flask
-flask是一个web框架，可以快速搭建web服务。有url路由，模版等功能
-flask教程 https://www.w3cschool.cn/flask/
-微信读书《Flask Web开发实战：入门 进阶与原理解析》
-Spark的API主要用到了@app.route的url路由，快速实现一个简单的http server。
+* flask是一个web框架，可以快速搭建web服务。有url路由，模版等功能
+* flask教程 https://www.w3cschool.cn/flask/
+* 微信读书《Flask Web开发实战：入门 进阶与原理解析》
+* Spark的API主要用到了@app.route的url路由，快速实现一个简单的http server。
 
 ## Sqlalchemy
-Sqlalchemy是一个python的ORM库。使用ORM库主要是为了sql的安全性。
-sqlalchemy简单教程： https://zhuanlan.zhihu.com/p/27400862
-sqlalchemy的数据类型: https://blog.csdn.net/aimill/article/details/81531499
-Spark通过sqlalchemy来进行数据库操作，每个表都对应一个类
+* Sqlalchemy是一个python的ORM库。使用ORM库主要是为了sql的安全性。
+* sqlalchemy简单教程： https://zhuanlan.zhihu.com/p/27400862
+* sqlalchemy的数据类型: https://blog.csdn.net/aimill/article/details/81531499
+* 详细的查询文档  https://www.cnblogs.com/dashuperfect/articles/11369010.html
+* Spark通过sqlalchemy来进行数据库操作，每个表都对应一个类
 
 # API协议
 ## 协议总览
