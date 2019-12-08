@@ -21,6 +21,25 @@ class Student(BaseModel):
     parentJob = db.Column(db.String(128))
     applyDate = db.Column(db.DateTime)
     applySchedule= db.Column(db.String(128))
+
+    @staticmethod
+    def getInfoById(ids):
+        r = {}
+        if not isinstance(ids, list):
+            ids = [ids]
+        
+        try:
+            res = db.session.query(Student).filter(Student.id.in_(ids)).all()
+            if res:
+                for i in res:
+                    r[i['id']] = i.toDict()
+                
+            db.session.commit()
+            
+        except Exception as e:
+            db.session.rollback()
+            return -1 ,None
+        return 0, r
         
     
 

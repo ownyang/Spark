@@ -34,6 +34,8 @@ def update(para):
 
     update = {}
     v = req.first()
+    if v is None:
+        return 404, 'id not exist', []
     fields = v.getFields()
     for field in fields:
         if field in para and field not in ("id", "wxOpenId"):

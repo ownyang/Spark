@@ -39,3 +39,20 @@ CREATE TABLE IF NOT EXISTS `tStudent` (
   `applySchedule` enum('DOING','DONE','REJECT') DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `tClass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `volunteerId` int(11)  default 0,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  `createTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `rClassStudent` (
+  `classId` int(11) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `state` int(11) default 0,
+  PRIMARY KEY (`classId`,`studentId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
