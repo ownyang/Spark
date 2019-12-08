@@ -111,6 +111,7 @@ curl  -k -i https://localhost/api -d'{"action":"class.create", "data":{"name":"c
 ###class.get
 根据条件拉取课程信息。
 入参
+
 字段|类型|必须|说明
 ---|---|---|---
 id | int| 否| 课程id
@@ -123,6 +124,7 @@ limit|int|否|分页查找的limit
 
 出参
 data是数组，数组中每个字段为
+
 字段|类型|说明
 ---|---|---
 id|int|课程id
@@ -144,12 +146,14 @@ curl  -k -i https://localhost/api -d'{"action":"class.get", "data":{"limit":2, "
 ###class.getWithStudent
 拉取具体某个课程的同学
 入参
+
 字段|类型|必须|说明
 ---|---|---|---
 id|int|是|课程的id
 
 出参数
 返回的class信息，包含了class.get中的信息。另外增加了students字段，这是个数组，数组元素为学生信息。
+
 字段|类型|说明
 ---|---|---
 studentId|int|学生的Id
@@ -168,6 +172,7 @@ curl  -k -i https://localhost/api -d'{"action":"class.getWithStudent", "data":{"
 ###class.studentGetClass
 拉取具体某个同学的所选的课程
 入参
+
 字段|类型|必须|说明
 ---|---|---|---
 studentId|int|是|学生的id
@@ -178,6 +183,7 @@ limit|int|否|分页查找的limit
 
 出参数
 data是数组，数组元素为课程信息，字段为
+
 字段|类型|说明
 ---|---|---
 classId|int|课程id
@@ -282,6 +288,7 @@ CREATE TABLE IF NOT EXISTS `rClassStudent` (
 ```
 
 数据库简要说明下
+
 表|说明
 ---|---
 tVolunteer|老师的表。wxOpenId 是唯一的。主键是自增的id，本系统建议使用id来传参数。
