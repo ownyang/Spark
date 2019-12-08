@@ -108,7 +108,7 @@ curl  -k -i https://localhost/api -d'{"action":"class.create", "data":{"name":"c
 
 ```
 
-###class.get
+### class.get
 根据条件拉取课程信息。
 入参
 
@@ -143,7 +143,7 @@ curl  -k -i https://localhost/api -d'{"action":"class.get", "data":{"limit":2, "
 {"msg": "ok", "code": 0, "data": [{"volunteerOpenId": "123123", "name": "ownyang", "volunteerId": 2, "volunteerName": "yangshuai", "startTime": "2019-12-10 10:00:00", "endTime": "2019-12-10 12:00:00", "id": 1}]}
 ```
 
-###class.getWithStudent
+### class.getWithStudent
 拉取具体某个课程的同学
 入参
 
@@ -169,7 +169,7 @@ curl  -k -i https://localhost/api -d'{"action":"class.getWithStudent", "data":{"
 {"msg": "ok", "code": 0, "data": {"volunteerOpenId": "123123", "name": "ownyang", "students": [{"studentId": 1, "studentOpenId": "123123", "studentName": "yangshuai"}, {"studentId": 2, "studentOpenId": "", "studentName": ""}, {"studentId": 3, "studentOpenId": "", "studentName": ""}], "volunteerId": 2, "volunteerName": "yangshuai", "startTime": "2019-12-10 10:00:00", "endTime": "2019-12-10 12:00:00", "id": 1}}
 ```
 
-###class.studentGetClass
+### class.studentGetClass
 拉取具体某个同学的所选的课程
 入参
 
