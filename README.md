@@ -18,10 +18,31 @@ API是以python的flask框架搭建，数据库的访问使用Sqlalchemy的orm�
 * Spark通过sqlalchemy来进行数据库操作，每个表都对应一个类
 
 # API协议
+
+## 鉴权和登陆
+登陆流程参照[小程序登陆](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html)
+步骤：
+1 前台从微信获得code
+2 将code请求后端的login接口。login接口返回token
+3 后续前台请求后台接口，把token放入http的authorization中进行请求
+
+举例：
+1 请求login和返回值
+```
+curl 'https://api.sparkcharity.cn:1443/login' -d'{"code":"5517"}'
+--------
+{"msg": "ok", "code": 0, "data": {"token": "eyJhbGciOiJIUzUxMiIsImV4cCI6MTU4MjE4NjI5NywiaWF0IjoxNTgwOTc2Njk3fQ.eyJvcGVuaWQiOiI1NTE3dGhpc2NvZGUifQ.WjsrCFLd4wry2zBKH1UaNceu_CO2I3LgIYFeWAEEKbUvVrRSHYrLBCL3RAfbm8GOzsp3ZVWoiU45kFpRQbF9dQ"}}
+```
+
+2 authorization中增加token 请求api
+```
+curl "https://api.sparkcharity.cn:1443/api" -u eyJhbGciOiJIUzUxMiIsImV4cCI6MTU4MjE4NzUyMiwiaWF0IjoxNTgwOTc3OTIyfQ.eyJvcGVuaWQiOiI1NTE3dGhpc2NvZGUifQ.jWp_W03CruCx5IRicP1npTF8HH0xHAgCswaeJRnf3HPSyfopSYNvmiVg3r5BH8K_PlEuYVnJKcQDFgKScpXaTQ:unused -d'{"action":"student.add","data":{"name":"yangshuai", "phone":"6666"}}'
+```
+
 ## 协议总览
 **url**
 ```
-https://localhost/api
+https://api.sparkcharity.cn/api
 ```
 https协议, 请求路径为/api。以POST方式请求，请求和返回为json格式。
 
@@ -102,7 +123,7 @@ class.studentGetClass | 获得同学已报名的课程。studentId为必须，�
 创建课程
 例子
 ```
-curl  -k -i https://localhost/api -d'{"action":"class.create", "data":{"name":"class for englist", "startTime":"2019-12-01 09:00:00", "endTime":"2019-12-01 10:00:00", "volunteerId":2}}'
+curl  -u token:unused https://localhost/api -d'{"action":"class.create", "data":{"name":"class for englist", "startTime":"2019-12-01 09:00:00", "endTime":"2019-12-01 10:00:00", "volunteerId":2}}'
 
 -----------
 {"msg": "sucess", "code": 0, "data": []}
@@ -284,6 +305,14 @@ CREATE TABLE IF NOT EXISTS `rClassStudent` (
   `state` int(11) default 0,
   PRIMARY KEY (`classId`,`studentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `tUser` (
+  `wxOpenId` varchar(128) NOT NULL,
+  `wxSessionKey` varchar(128) NOT NULL,
+  `role` varchar(32) default NULL,
+  `createTime` timestamp  DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wxOpenId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 
 ```

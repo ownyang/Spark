@@ -24,8 +24,10 @@ def add(para):
 def get(para):
     wxOpenId = para["wxOpenId"]
     v = db.session.query(model.User.User).filter_by(wxOpenId = wxOpenId).first()
-
-    return 0,'sucess',  v.toDict()
+    if v:
+        return 0,'sucess',  v.toDict()
+    else:
+        return 0, 'success', {}
 
 def update(para):
     wxOpenId = para["wxOpenId"]

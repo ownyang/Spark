@@ -8,7 +8,7 @@ import sys
 from flask_sqlalchemy import SQLAlchemy
 import weixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from handler import user
+from handler.user
 
 app = Flask(__name__)
 
@@ -93,13 +93,13 @@ def login():
 
         if r["errcode"] == 0:
             para = {"wxOpenId":r["openid"], "wxSessionKey":r["session_key"]}
-            code, msg, data = user.get(para)
+            code, msg, data = handler.user.get(para)
             if data:
                 #update
-                user.update(para)
+                handler.user.update(para)
             else:
                 #add
-                user.add(para)
+                handler.user.add(para)
             
             token = create_token(r["openid"])
 
@@ -120,5 +120,5 @@ def login():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port = 443, ssl_context='/data/release/spark/cert/1_api.sparkcharity.cn_bundle.crt', '/data/release/spark/cert/2_api.sparkcharity.cn.key',  threaded=True)
+    app.run(host='0.0.0.0', port = 443, ssl_context=('/data/release/spark/cert/1_api.sparkcharity.cn_bundle.crt', '/data/release/spark/cert/2_api.sparkcharity.cn.key'),  threaded=True)
 

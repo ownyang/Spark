@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from urllib import requst
+import urllib2
 import json
 
 weixinUrl = "https://api.weixin.qq.com"
@@ -16,7 +16,7 @@ def code2session(code):
     url = "{0}/sns/jscode2session?appid={1}&secret={2}&js_code={3}&grant_type=authorization_code".format(weixinUrl, appid, secret, code)
     try:
         print("url={0}".format(url))
-        req = request.urlopen(url)
+        req = urllib2.urlopen(url)
         resp = req.read()
         print("resp={0}".format(resp))
 
