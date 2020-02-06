@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from app import db
-import model.Student
-from handler import user
+import model.User
 
 def add(para):
     wxOpenId = str(para["wxOpenId"])
-    name = para["name"]
-    r = model.Student.Student(wxOpenId=wxOpenId, name=name)
+    wxSessionKey = para["wxSessionKey"]
+    r = model.User.User(wxOpenId=wxOpenId, wxSessionKey=wxSessionKey)
     fields = r.getFields()
     for f in fields:
         if f in para:
@@ -21,22 +20,17 @@ def add(para):
         db.session.rollback()
         print(e)
         return 500, 'db fail', []
-    
-    p = {"wxOpenId":wxOpenId, "role":"student"}
-    user.update(p)
-    
-
 
 def get(para):
     wxOpenId = para["wxOpenId"]
-    v = db.session.query(model.Student.Student).filter_by(wxOpenId = wxOpenId).first()
+    v = db.session.query(model.User.User).filter_by(wxOpenId = wxOpenId).first()
 
     return 0,'sucess',  v.toDict()
 
 def update(para):
-    id = para["id"]
+    wxOpenId = para["wxOpenId"]
     
-    req = db.session.query(model.Student.Student).filter_by(id = id)
+    req = db.session.query(model.User.User).filter_by(wxOpenId = wxOpenId)
 
     update = {}
     v = req.first()
@@ -44,7 +38,7 @@ def update(para):
         return 404, 'id not exits', []
     fields = v.getFields()
     for field in fields:
-        if field in para and field not in ("id", "wxOpenId"):
+        if field in para and field not in ("wxOpenId"):
             update[field] = para[field]
     try:
         req.update(update)

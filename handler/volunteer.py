@@ -20,10 +20,13 @@ def add(para):
         db.session.rollback()
         print(e)
         return 500, "db fail", []
+    
+    p = {"wxOpenId":wxOpenId, "role":"volunteer"}
+    user.update(p)
 
 def get(para):
-    id = para["id"]
-    v = db.session.query(model.Volunteer.Volunteer).filter_by(id = id).first()
+    wxOpenId = para["wxOpenId"]
+    v = db.session.query(model.Volunteer.Volunteer).filter_by(wxOpenId = wxOpenId).first()
 
     return 0,'sucess',  v.toDict()
 
