@@ -29,7 +29,7 @@ API是以python的flask框架搭建，数据库的访问使用Sqlalchemy的orm�
 举例：
 1 请求login和返回值
 ```
-curl 'https://api.sparkcharity.cn/login' -d'{"code":"5517"}'
+curl -i  https://api.sparkcharity.cn/login?code=0430lqzJ0MDg7a2Nj3AJ0RTqzJ00lqzZ
 --------
 {"msg": "ok", "code": 0, "data": {"token": "eyJhbGciOiJIUzUxMiIsImV4cCI6MTU4MjE4NjI5NywiaWF0IjoxNTgwOTc2Njk3fQ.eyJvcGVuaWQiOiI1NTE3dGhpc2NvZGUifQ.WjsrCFLd4wry2zBKH1UaNceu_CO2I3LgIYFeWAEEKbUvVrRSHYrLBCL3RAfbm8GOzsp3ZVWoiU45kFpRQbF9dQ"}}
 ```

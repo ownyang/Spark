@@ -82,12 +82,10 @@ def verify_token(token):
 
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET'])
 def login():
     try:
-        req = request.get_data()
-        o = json.loads(req)
-        code = o["code"]
+        code = request.args.get("code")
 
         r = weixin.code2session(code)
 
