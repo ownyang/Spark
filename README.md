@@ -137,6 +137,7 @@ curl  -u token:unused https://localhost/api -d'{"action":"class.create", "data":
 data参数为{}, 没有额外参数。会根据token直接找到对应的wxOpenId
 
 出参
+
 字段|类型|说明
 ---|---|---
 wxOpenId|string|wxOpenId
