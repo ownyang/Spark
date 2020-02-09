@@ -103,6 +103,7 @@ https协议, 请求路径为/api。以POST方式请求，请求和返回为json�
 
 接口|说明
 ---|----
+user.get| 获得用户的角色信息。主要返回用户的wxOpenId和role。role表示了用户的角色，student:学生；volunteer: 志愿者。
 volunteer.add|数据库中增加volunteer。wxOpenId,name是必须传入。与tVolunteer表对应
 volunteer.get|查询volunteer。根据传入的id (插入时生成的自增ID)查询volunteer信息。与tVolunteer表对应
 volunteer.update|更改volunteer的信息。id是必传的，更改指定id的信息。除了id和wxOpenId不可更改外，在data中的传入的字段都可以更改。与tVolunteer表对应
@@ -127,6 +128,31 @@ curl  -u token:unused https://localhost/api -d'{"action":"class.create", "data":
 
 -----------
 {"msg": "sucess", "code": 0, "data": []}
+
+```
+
+### user.get
+获得用户的角色信息
+入参
+data参数为{}, 没有额外参数。会根据token直接找到对应的wxOpenId
+
+出参
+字段|类型|说明
+---|---|---
+wxOpenId|string|wxOpenId
+wxSessionKey|string|wxSessionKey
+role|string|用户角色。student:学生； volunteer: 志愿者。
+
+代码逻辑
+在调用login的时候，会在tUser中插入新的记录，记录wxOpenId和wxSessionKey, 而role是空的。只有在调用student.add或volunteer.add的时候，会修改role为相应的值。
+
+举例：
+```
+curl "https://api.sparkcharity.cn:443/api" -u eyJhbGciOiJIUzUxMiIsImV4cCI6MTU4MjE4NzUyMiwiaWF0IjoxNTgwOTc3OTIyfQ.eyJvcGVuaWQiOiI1NTE3dGhpc2NvZGUifQ.jWp_W03CruCx5IRicP1npTF8HH0xHAgCswaeJRnf3HPSyfopSYNvmiVg3r5BH8K_PlEuYVnJKcQDFgKScpXaTQ:unused -d'{"action":"user.get","data":{}}'
+
+----
+
+{"msg": "sucess", "code": 0, "data": {"role": "student", "wxOpenId": "5517thiscode", "wxSessionKey": "5517thiscode", "createTime": "2020-02-06 16:44:34"}}
 
 ```
 
