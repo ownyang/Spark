@@ -104,11 +104,11 @@ https协议, 请求路径为/api。以POST方式请求，请求和返回为json�
 接口|说明
 ---|----
 user.get| 获得用户的角色信息。主要返回用户的wxOpenId和role。role表示了用户的角色，student:学生；volunteer: 志愿者。
-volunteer.add|数据库中增加volunteer。wxOpenId,name是必须传入。与tVolunteer表对应
-volunteer.get|查询volunteer。根据传入的id (插入时生成的自增ID)查询volunteer信息。与tVolunteer表对应
+volunteer.add|数据库中增加volunteer。name是必须传入。与tVolunteer表对应
+volunteer.get|查询volunteer。不需要传入参数，通过token翻译出wxOpenId。与tVolunteer表对应
 volunteer.update|更改volunteer的信息。id是必传的，更改指定id的信息。除了id和wxOpenId不可更改外，在data中的传入的字段都可以更改。与tVolunteer表对应
-student.add|数据库中增加student。wxOpenId,name是必须传入。与tStudent表对应
-student.get|查询student。根据id来查询student的信息。与tStudent表对应
+student.add|数据库中增加student。name是必须传入。与tStudent表对应
+student.get|查询student。不需要传入参数，通过token翻译出wxOpenId。与tStudent表对应
 student.update|更改student的信息。根据id来更新。与tStudent表对应
 class.create|创建一个课程。name, startTime, endTime是必须的参数。与tClass表对应
 class.get|拉取课程信息。传入的参数比较多，见下面的具体接口描述
@@ -120,7 +120,7 @@ class.studentUnSelectClass | 同学取消选课。传入的参数为classId, stu
 class.studentSignIn|同学上课签到。传入的参数为classId, studentId。
 class.studentGetClass | 获得同学已报名的课程。studentId为必须，其他参数见接口详细列表
 
-###class.create
+### class.create
 创建课程
 例子
 ```
