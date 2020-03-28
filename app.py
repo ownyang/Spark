@@ -1,29 +1,47 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 import json
 import traceback
+import logging
 import sys
 from flask_sqlalchemy import SQLAlchemy
-import weixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from handler.user
+import handler.user 
 
-app = Flask(__name__)
 
+app = Flask(__name__, static_folder='', static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:Spark0111@localhost:9306/Spark?charset=utf8"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True 
 db = SQLAlchemy(app)
 
+mylogger = logging.getLogger("spark")
+mylogger.setLevel(level=logging.DEBUG)
+fhandler = logging.FileHandler('/data/release/spark/spark.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fhandler.setFormatter(formatter)
+mylogger.addHandler(fhandler)
+
+
+import weixin
+
 TOKEN_SECRET = "Thisisspark-Secret-20200202"
+
+@app.route('/')
+def defaultPage():
+    return render_template('index.html')
 
 @app.route('/api', methods=['POST'])
 def apiDispatch():
+    db = SQLAlchemy(app)
     try:
 
         auth = request.authorization
+        mylogger.info("{0}".format(auth))
+        print "auth={0}".format(auth)
         if not auth:
+            print "no auth"
             return 'no authorization info', 401
         
         token = auth.username
@@ -84,12 +102,13 @@ def verify_token(token):
 
 @app.route('/login', methods=['GET'])
 def login():
+    db = SQLAlchemy(app)
     try:
         code = request.args.get("code")
 
         r = weixin.code2session(code)
 
-        if r["errcode"] == 0:
+        if "openid" in r:
             para = {"wxOpenId":r["openid"], "wxSessionKey":r["session_key"]}
             code, msg, data = handler.user.get(para)
             if data:

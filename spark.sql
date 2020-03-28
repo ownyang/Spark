@@ -55,4 +55,12 @@ CREATE TABLE IF NOT EXISTS `rClassStudent` (
   `studentId` int(11) NOT NULL,
   `state` int(11) default 0,
   PRIMARY KEY (`classId`,`studentId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `tUser` (
+  `wxOpenId` varchar(128) NOT NULL,
+  `wxSessionKey` varchar(128) NOT NULL,
+  `role` varchar(32) default NULL,
+  `createTime` timestamp  DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wxOpenId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latint1 ;

@@ -16,15 +16,14 @@ def add(para):
     try:
         db.session.add(r)
         db.session.commit()
-        p = {"wxOpenId":wxOpenId, "role":"volunteer"}
-        handler.user.update(p)
         return 0, 'sucess', []
     except Exception as e:
         db.session.rollback()
         print(e)
         return 500, "db fail", []
     
-    
+    p = {"wxOpenId":wxOpenId, "role":"volunteer"}
+    handler.user.update(p)
 
 def get(para):
     wxOpenId = para["wxOpenId"]

@@ -3,7 +3,7 @@
 
 from app import db
 import model.Student
-import handler.user
+import handler.user 
 
 def add(para):
     wxOpenId = str(para["wxOpenId"])
@@ -17,13 +17,12 @@ def add(para):
         db.session.add(r)
         db.session.commit()
         p = {"wxOpenId":wxOpenId, "role":"student"}
-        handerl.user.update(p)
+        handler.user.update(p)
         return 0, 'sucess', []
     except Exception as e:
         db.session.rollback()
         print(e)
         return 500, 'db fail', []
-    
     
     
 
