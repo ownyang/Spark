@@ -29,7 +29,10 @@ def get(para):
     wxOpenId = para["wxOpenId"]
     v = db.session.query(model.Volunteer.Volunteer).filter_by(wxOpenId = wxOpenId).first()
 
-    return 0,'sucess',  v.toDict()
+    if v:
+        return 0,'sucess',  v.toDict()
+    else:
+        return 400, 'not found', {}
 
 def update(para):
     id = para["id"]
