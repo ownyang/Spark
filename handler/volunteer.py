@@ -4,6 +4,7 @@
 from app import db
 import model.Volunteer
 import handler.user
+from app import mylogger 
 
 def add(para):
     wxOpenId = str(para["wxOpenId"])
@@ -16,19 +17,19 @@ def add(para):
     try:
         db.session.add(r)
         db.session.commit()
+        p = {"wxOpenId":wxOpenId, "role":"volunteer"}
+        handler.user.update(p)
         return 0, 'sucess', []
     except Exception as e:
         db.session.rollback()
         print(e)
+        mylogger.info(e)
         return 500, "db fail", []
     
-    p = {"wxOpenId":wxOpenId, "role":"volunteer"}
-    handler.user.update(p)
 
 def get(para):
     wxOpenId = para["wxOpenId"]
     v = db.session.query(model.Volunteer.Volunteer).filter_by(wxOpenId = wxOpenId).first()
-
     if v:
         return 0,'sucess',  v.toDict()
     else:
@@ -53,6 +54,8 @@ def update(para):
     except Exception as e:
         db.session.rollback()
         print(e)
+	mylogger.info(e)
         return 500, "db fail", []
 
     return 0, 'sucess', None
+

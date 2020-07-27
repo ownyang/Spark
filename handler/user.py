@@ -28,7 +28,7 @@ def get(para):
     if v:
         return 0,'sucess',  v.toDict()
     else:
-        return 0,'sucess', {} 
+        return 400,'sucess', {} 
 
 def update(para):
     wxOpenId = para["wxOpenId"]

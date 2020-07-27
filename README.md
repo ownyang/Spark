@@ -119,6 +119,7 @@ class.studentSelectClass | 同学选课。传入的参数为classId, studentIds�
 class.studentUnSelectClass | 同学取消选课。传入的参数为classId, studentId。
 class.studentSignIn|同学上课签到。传入的参数为classId, studentId。
 class.studentGetClass | 获得同学已报名的课程。studentId为必须，其他参数见接口详细列表
+class.feedback | 课程反馈。studentId和classId为必传；其他字段为被修改的字段。
 
 ### class.create
 创建课程

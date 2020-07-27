@@ -12,7 +12,7 @@ import handler.user
 
 
 app = Flask(__name__, static_folder='', static_url_path='')
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:Spark0111@localhost:9306/Spark?charset=utf8"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:spark@localhost:3306/Spark?charset=utf8"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True 
 db = SQLAlchemy(app)
 
@@ -32,11 +32,10 @@ TOKEN_SECRET = "Thisisspark-Secret-20200202"
 def defaultPage():
     return render_template('index.html')
 
-@app.route('/api', methods=['POST'])
+@app.route('/api', methods=['POST', 'GET'])
 def apiDispatch():
     db = SQLAlchemy(app)
     try:
-
         auth = request.authorization
         mylogger.info("{0}".format(auth))
         print "auth={0}".format(auth)
@@ -52,8 +51,8 @@ def apiDispatch():
         except Exception:
             return 'authorization fail', 401
 
-
         req = request.get_data()
+        mylogger.info("req={0}".format(req))
         o = json.loads(req)
         action = o["action"]
         para = o.get('data', {})
@@ -78,6 +77,7 @@ def apiDispatch():
             "msg" : msg,
             "data" : data if data else []
         }
+        mylogger.info("resp={0}".format(json.dumps(resp)))
 
         return json.dumps(resp)
 

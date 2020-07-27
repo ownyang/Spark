@@ -4,6 +4,7 @@
 from app import db
 import model.Student
 import handler.user 
+from app import mylogger 
 
 def add(para):
     wxOpenId = str(para["wxOpenId"])
@@ -22,6 +23,7 @@ def add(para):
     except Exception as e:
         db.session.rollback()
         print(e)
+        mylogger.info(e)
         return 500, 'db fail', []
     
     

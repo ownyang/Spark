@@ -8,13 +8,12 @@ from .BaseModel import BaseModel
 class Class(BaseModel):
     __tablename__ = "tClass"
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(128))
     volunteerId = db.Column(db.Integer)
-    
-    startTime = db.Column(db.DateTime)
-    endTime = db.Column(db.DateTime)
+    classTime = db.Column(db.Date)
     createTime = db.Column(db.DateTime)
-    
-        
-    
-
+    isFeedback = db.Column(db.Integer)
+    classBehavior = db.Column(db.String)
+    classContent = db.Column(db.String)
+    improvements = db.Column(db.String)        
+    changes = db.Column(db.String)
+    notes = db.Column(db.String)

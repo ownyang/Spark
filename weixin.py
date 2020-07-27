@@ -7,7 +7,7 @@ import app
 import time
 weixinUrl = "https://api.weixin.qq.com"
 appid = "wxf596e5ef09f5be7f"
-secret = "8fecf2a920b6ae977e4e7d888fa8569d"
+secret = "4c260eae851293d24b96e91ad48f2225"
 
 '''
 docs
@@ -22,6 +22,7 @@ def code2session(code):
         app.mylogger.info("resp={0}".format(resp))
 
         o = json.loads(resp)
+        o = {"errcode":0, "errmsg":"ok", "openid":o["openid"], "session_key":o["session_key"]} 
         #openid = "{0}thiscode{1}".format(code, int(time.time()))  #mock
         #o = {"errcode":0, "errmsg":"ok", "openid":openid, "session_key":openid} #mock
 

@@ -9,5 +9,5 @@ then
     kill -9 $pid
 fi
 
-nohup python app.py > app.log 2>&1 &
+nohup python app.py >> app.log 2>&1 &
 
