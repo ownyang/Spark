@@ -230,6 +230,7 @@ begin|string|否| 时间过滤开始时间，格式2019-10-01 10:00:00
 end|string|否| 时间过滤结束时间，格式2019-10-01 10:00:00
 offset|int|否|分页查找的offset
 limit|int|否|分页查找的limit
+classId|int|否|班级ID。可选参数
 
 出参数
 data是数组，数组元素为课程信息，字段为

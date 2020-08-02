@@ -213,6 +213,8 @@ def studentGetClass(para):
     if "end" in para:
         end = mydb.escape_string(para['end'])
         cond = cond + " and t1.classTime <= '{0}'".format(end)
+    if "classId" in para:
+        cond = cond + " and t1.classId = '{0}'".format(para["classId"])
     sql = "select t1.id classId, t1.volunteerId volunteerId, t1.classTime, t4.name volunteerName, t2.studentId, t3.name studentName, t2.isFeedback, t2.mark, t2.improvements from tClass t1, rClassStudent t2, tStudent t3, tVolunteer t4 where t1.id = t2.classId and t2.studentId = t3.id and t1.volunteerId = t4.id and   " + cond + " order by classTime desc "
     
     if "limit" in para:
